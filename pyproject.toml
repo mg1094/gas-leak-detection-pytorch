@@ -1,0 +1,131 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "gas-leak-detection"
+version = "1.0.0"
+description = "基于PyTorch LSTM+SVM的燃气泄漏智能检测与预警系统"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "开发团队", email = "dev@example.com"}
+]
+maintainers = [
+    {name = "开发团队", email = "dev@example.com"}
+]
+keywords = [
+    "gas-detection",
+    "pytorch",
+    "lstm",
+    "svm",
+    "iot",
+    "alert-system",
+    "smart-home",
+    "ai",
+    "deep-learning"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Home Automation",
+    "Topic :: System :: Monitoring"
+]
+requires-python = ">=3.9"
+dependencies = [
+    "numpy",
+    "pandas",
+    "scikit-learn",
+    "matplotlib",
+    "seaborn",
+    "flask",
+    "requests",
+    "paho-mqtt",
+    "python-dotenv",
+    "psutil",
+    "schedule",
+    "joblib",
+]
+
+[project.optional-dependencies]
+pytorch = [
+    "torch>=1.13.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "pre-commit>=3.0.0"
+]
+docs = [
+    "sphinx>=5.0.0",
+    "sphinx-rtd-theme>=1.2.0",
+    "myst-parser>=1.0.0"
+]
+test = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-mock>=3.10.0",
+    "coverage>=7.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/mg1094/gas-leak-detection-pytorch"
+Documentation = "https://github.com/mg1094/gas-leak-detection-pytorch#readme"
+Repository = "https://github.com/mg1094/gas-leak-detection-pytorch.git"
+"Bug Tracker" = "https://github.com/mg1094/gas-leak-detection-pytorch/issues"
+
+[project.scripts]
+gas-detection = "main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["sensors", "ml_models", "alert_system", "cloud_service", "utils"]
+
+[tool.black]
+line-length = 100
+target-version = ['py38']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 100
+multi_line_output = 3
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers --strict-config"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["sensors", "ml_models", "alert_system", "cloud_service", "utils"]
+omit = ["*/tests/*", "*/test_*", "setup.py"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = [
+    "torch.*",
+    "sklearn.*",
+    "pandas.*",
+    "numpy.*",
+    "matplotlib.*",
+    "seaborn.*",
+    "paho.*",
+    "psutil.*",
+    "schedule.*"
+]
+ignore_missing_imports = true
